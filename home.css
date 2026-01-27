@@ -1,0 +1,99 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #050b16;
+    color: white;
+    user-select: none;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+
+.wallet-badge {
+    color: #007aff;
+    background: rgba(0, 122, 255, 0.1);
+    padding: 4px 12px;
+    border-radius: 12px;
+    border: 1px solid #007aff;
+}
+
+.balance-card {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.balance-card p { color: #8a8d91; margin: 0; }
+.balance-card h1 { font-size: 3.2rem; margin: 5px 0; color: #fff; }
+
+.mining-box {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#timer-display {
+    font-size: 2.5rem;
+    font-weight: bold;
+    font-family: monospace;
+    color: #007aff;
+}
+
+.progress-container {
+    width: 100%;
+    height: 8px;
+    background: #1c222d;
+    border-radius: 4px;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+#progress-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #007aff, #00c6ff);
+    transition: width 1s linear;
+}
+
+#mining-status { color: #8a8d91; font-size: 0.9rem; }
+#pending-amount { color: #4cd964; margin: 10px 0 0 0; }
+
+.footer { margin-top: auto; padding-bottom: 20px; }
+
+#action-btn {
+    width: 100%;
+    padding: 18px;
+    border: none;
+    border-radius: 16px;
+    background: #007aff;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
+}
+
+#action-btn:disabled {
+    background: #2c2c2e;
+    color: #8a8d91;
+    box-shadow: none;
+}
+
+#action-btn.claim-mode {
+    background: #4cd964;
+    box-shadow: 0 4px 15px rgba(76, 217, 100, 0.3);
+}

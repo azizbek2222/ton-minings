@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TON Mining Mini App</title>
+    <link rel="stylesheet" href="home.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <span id="user-name">Foydalanuvchi</span>
+            <div class="wallet-badge">TON Network</div>
+        </div>
+
+        <div class="main-content">
+            <div class="balance-card">
+                <p>Asosiy Balans</p>
+                <h1 id="total-balance">0.000000</h1>
+                <span class="currency">TON</span>
+            </div>
+
+            <div class="mining-box">
+                <div id="timer-display">10:00</div>
+                <div class="progress-container">
+                    <div id="progress-bar"></div>
+                </div>
+                <p id="mining-status">Mining boshlashga tayyor</p>
+                <h2 id="pending-amount">0.00000</h2>
+            </div>
+        </div>
+
+        <div class="footer">
+            <button id="action-btn">MININGNI BOSHLASH</button>
+        </div>
+    </div>
+    <script src="home.js"></script>
+</body>
+</html>
