@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+;<!DOCTYPE html>
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
@@ -6,9 +6,7 @@
     <title>TON Mining Mini App</title>
     <link rel="stylesheet" href="home.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
-</head>
+    </head>
 <body>
     <div class="app-container">
         <div class="header">
@@ -33,10 +31,30 @@
             </div>
         </div>
 
-        <div class="footer">
+        <div class="mining-action-footer">
             <button id="action-btn">MININGNI BOSHLASH</button>
         </div>
+
+        <div class="bottom-nav">
+            <button onclick="window.location.href='top.html'" class="nav-item">
+                <span class="nav-icon">🏆</span>
+                <span class="nav-text">TOP</span>
+            </button>
+            <button onclick="window.location.href='rating.html'" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">REYTING</span>
+            </button>
+            <button onclick="window.location.href='dice.html'" class="nav-item">
+                <span class="nav-icon">🎲</span>
+                <span class="nav-text">DICE</span>
+            </button>
+            <button onclick="window.location.href='withdraw.html'" class="nav-item">
+                <span class="nav-icon">💳</span>
+                <span class="nav-text">WITHDRAW</span>
+            </button>
+        </div>
     </div>
+
     <script type="module" src="home.js"></script>
 </body>
 </html>
