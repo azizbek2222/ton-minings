@@ -1,12 +1,34 @@
-<!doctype html>
-<html>
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1">
-    </head>
-    <body>
-      <div>
-        Hello World!
-      </div>
-    </body>
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Withdraw - TON Mining</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="withdraw.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <button onclick="window.location.href='home.html'" class="back-btn">⬅</button>
+            <span>Yechib olish</span>
+            <div class="balance-mini">Balans: <span id="user-balance">0.00</span> TON</div>
+        </div>
+
+        <div class="withdraw-card">
+            <p class="info-text">FaucetPay Gmail hisobingizga yeching</p>
+            <input type="email" id="faucetpay-email" placeholder="FaucetPay Gmail" class="w-input">
+            <input type="number" id="withdraw-amount" placeholder="Miqdor (Min: 0.001)" class="w-input" step="0.0001">
+            <button id="withdraw-submit-btn" class="w-btn">SO'ROV YUBORISH</button>
+        </div>
+
+        <div class="history-section">
+            <h3>So'rovlar tarixi (Oxirgi 10 ta)</h3>
+            <div id="history-list">
+                </div>
+        </div>
+    </div>
+    <script type="module" src="withdraw.js"></script>
+</body>
 </html>
