@@ -1,8 +1,6 @@
-// Firebase modullarini import qilish
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-import { getDatabase, ref, onValue, set, update } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+import { getDatabase, ref, onValue, set, update, get } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
 
-// Sizning yangi konfiguratsiyangiz
 const firebaseConfig = {
     apiKey: "AIzaSyDIeG8dVbm0Yk7FR1hPzrBoD7rgDKWAFoY",
     authDomain: "user1111-c84a0.firebaseapp.com",
@@ -14,24 +12,20 @@ const firebaseConfig = {
     measurementId: "G-VYJLRSC6MB"
 };
 
-// Firebase-ni ishga tushirish
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// Telegram WebApp sozlamalari
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-// Telegram foydalanuvchi ma'lumotlarini olish
 const user = tg.initDataUnsafe?.user || { id: "test_user", first_name: "Mehmon" };
-const userId = user.id;
+const userId = user.id.toString(); // ID har doim string bo'lishi yaxshi
 document.getElementById('user-name').innerText = user.first_name;
 
-// O'zgaruvchilar
 let totalBalance = 0;
-let miningTime = 600; // 10 minut = 600 soniya
-let timeLeft = miningTime;
+let miningDuration = 600; // 10 minut (soniyalarda)
 let timerInterval;
+const miningReward = 0.00005;
 
 const actionBtn = document.getElementById('action-btn');
 const timerDisplay = document.getElementById('timer-display');
@@ -39,92 +33,121 @@ const progressBar = document.getElementById('progress-bar');
 const pendingDisplay = document.getElementById('pending-amount');
 const balanceDisplay = document.getElementById('total-balance');
 
-// Firebase'dan foydalanuvchi balansini olish (Telegram ID bo'yicha)
 const userRef = ref(db, 'users/' + userId);
+
+// 1. Foydalanuvchi ma'lumotlarini real vaqtda kuzatish
 onValue(userRef, (snapshot) => {
     const data = snapshot.val();
     if (data) {
         totalBalance = data.balance || 0;
         balanceDisplay.innerText = totalBalance.toFixed(6);
+        
+        // Agar mining jarayoni bazada bo'lsa, uni tiklash
+        if (data.miningStartedAt) {
+            resumeMining(data.miningStartedAt);
+        }
     } else {
-        // Yangi foydalanuvchi bo'lsa bazaga qo'shish
+        // Yangi foydalanuvchi yaratish
         set(userRef, {
             name: user.first_name,
             balance: 0,
-            id: userId
+            miningStartedAt: null
         });
     }
-});
+}, { onlyOnce: false });
 
-// Tugma bosilganda ishlash tartibi
+// 2. Miningni boshlash
 actionBtn.addEventListener('click', () => {
     if (actionBtn.classList.contains('claim-mode')) {
         claimTon();
     } else {
-        startMining();
+        const startTime = Date.now();
+        // Bazaga mining boshlangan vaqtni yozamiz
+        update(userRef, { miningStartedAt: startTime })
+        .then(() => startUIThread(startTime));
     }
 });
 
-function startMining() {
+// 3. Mining jarayonini davom ettirish (Qayta kirganda)
+function resumeMining(startTime) {
+    const now = Date.now();
+    const elapsedSeconds = Math.floor((now - startTime) / 1000);
+
+    if (elapsedSeconds >= miningDuration) {
+        // Mining tugab bo'lgan
+        stopMiningUI();
+    } else {
+        // Mining hali davom etmoqda
+        startUIThread(startTime);
+    }
+}
+
+// 4. Ekranda taymerni aylantirish
+function startUIThread(startTime) {
+    clearInterval(timerInterval);
     actionBtn.disabled = true;
-    actionBtn.innerText = "MINING QILINMOQDA...";
-    document.getElementById('mining-status').innerText = "TON yig'ilmoqda...";
-    
-    timeLeft = miningTime;
+    actionBtn.innerText = "MINING...";
     
     timerInterval = setInterval(() => {
-        timeLeft--;
-        updateMiningUI();
-        
-        if (timeLeft <= 0) {
-            stopMining();
+        const now = Date.now();
+        const elapsed = Math.floor((now - startTime) / 1000);
+        const remaining = miningDuration - elapsed;
+
+        if (remaining <= 0) {
+            stopMiningUI();
+        } else {
+            updateUI(remaining);
         }
     }, 1000);
 }
 
-function updateMiningUI() {
-    // Vaqtni MM:SS ko'rinishiga keltirish
-    let mins = Math.floor(timeLeft / 60);
-    let secs = timeLeft % 60;
+function updateUI(remaining) {
+    let mins = Math.floor(remaining / 60);
+    let secs = remaining % 60;
     timerDisplay.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
     
-    // Progress bar foizini hisoblash
-    let progress = ((miningTime - timeLeft) / miningTime) * 100;
+    let progress = ((miningDuration - remaining) / miningDuration) * 100;
     progressBar.style.width = progress + "%";
     
-    // 10 minutda 0.00005 TON yig'ilishini ko'rsatib turish
-    let earnedSoFar = ((miningTime - timeLeft) / miningTime) * 0.00005;
-    pendingDisplay.innerText = earnedSoFar.toFixed(6);
+    let earned = ((miningDuration - remaining) / miningDuration) * miningReward;
+    pendingDisplay.innerText = earned.toFixed(6);
 }
 
-function stopMining() {
+function stopMiningUI() {
     clearInterval(timerInterval);
     actionBtn.disabled = false;
-    actionBtn.innerText = "DAROMADNI OLISH (CLAIM)";
+    actionBtn.innerText = "CLAIM TON";
     actionBtn.classList.add('claim-mode');
-    document.getElementById('mining-status').innerText = "Mining yakunlandi!";
-    pendingDisplay.innerText = "0.00005";
+    timerDisplay.innerText = "00:00";
+    progressBar.style.width = "100%";
+    pendingDisplay.innerText = miningReward.toFixed(5);
+    document.getElementById('mining-status').innerText = "Finished!";
 }
 
-function claimTon() {
-    // Yangi balansni hisoblash
-    const newBalance = totalBalance + 0.00005;
+// 5. Balansni saqlash va jarayonni yakunlash
+async function claimTon() {
+    actionBtn.disabled = true; // Dublikat bosishni oldini olish
     
-    // Firebase'da yangilash (Telegram ID ostidagi balance o'zgaradi)
-    update(userRef, {
-        balance: newBalance
-    }).then(() => {
-        // Interfeysni dastlabki holatga qaytarish
+    const newBalance = totalBalance + miningReward;
+    
+    try {
+        await update(userRef, {
+            balance: newBalance,
+            miningStartedAt: null // Miningni o'chirish
+        });
+        
+        // UI-ni tozalash
         actionBtn.classList.remove('claim-mode');
-        actionBtn.innerText = "MININGNI BOSHLASH";
+        actionBtn.innerText = "START MINING";
         timerDisplay.innerText = "10:00";
         progressBar.style.width = "0%";
         pendingDisplay.innerText = "0.00000";
-        document.getElementById('mining-status').innerText = "Mining boshlashga tayyor";
+        document.getElementById('mining-status').innerText = "Ready to mine";
         
-        tg.showAlert("Tabriklaymiz! 0.00005 TON balansingizga qo'shildi.");
-    }).catch((error) => {
-        console.error("Xatolik yuz berdi:", error);
-        tg.showAlert("Xatolik yuz berdi, qaytadan urunib ko'ring.");
-    });
+        tg.showAlert(`Successfully claimed ${miningReward} TON!`);
+    } catch (e) {
+        tg.showAlert("Error: " + e.message);
+    } finally {
+        actionBtn.disabled = false;
+    }
 }
