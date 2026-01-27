@@ -1,5 +1,75 @@
-body
-{
-    color: #000000;
-    padding: 0px;
+.game-area {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 25px;
+    margin-top: 20px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+.dice-circle {
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, #007aff, #005bb7);
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    box-shadow: 0 0 20px rgba(0, 122, 255, 0.5);
+    transition: transform 0.2s;
+}
+
+.dice-circle.win { background: #4cd964; box-shadow: 0 0 20px rgba(76, 217, 100, 0.5); }
+.dice-circle.lose { background: #ff3b30; box-shadow: 0 0 20px rgba(255, 59, 48, 0.5); }
+
+.input-group, .range-group { margin-bottom: 20px; text-align: left; }
+.input-group label, .range-group label { color: #8a8d91; font-size: 0.8rem; margin-bottom: 5px; display: block; }
+
+input[type="number"] {
+    width: 100%;
+    background: #1c222d;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    color: white;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+input[type="range"] {
+    width: 100%;
+    margin: 10px 0;
+}
+
+.range-labels { display: flex; justify-content: space-between; color: #555; font-size: 0.7rem; }
+
+.payout-info { font-weight: bold; color: #4cd964; margin-bottom: 20px; font-size: 1.1rem; }
+
+.roll-button {
+    width: 100%;
+    padding: 18px;
+    background: #007aff;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.history-item {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+}
+
+.win-text { color: #4cd964; }
+.lose-text { color: #ff3b30; }
+
+.back-btn { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; }
