@@ -1,5 +1,59 @@
-body
-{
-    color: #000000;
-    padding: 0px;
+.top-list-container {
+    margin-top: 20px;
+    height: calc(100vh - 180px);
+    overflow-y: auto;
+    padding-right: 5px;
 }
+
+/* Scrollbar dizayni */
+.top-list-container::-webkit-scrollbar { width: 4px; }
+.top-list-container::-webkit-scrollbar-thumb { background: #007aff; border-radius: 10px; }
+
+.user-row {
+    background: rgba(255, 255, 255, 0.05);
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.rank-number {
+    font-weight: bold;
+    width: 35px;
+    font-size: 1.1rem;
+    color: #8a8d91;
+}
+
+/* Top 3 uchun alohida ranglar */
+.rank-1 .rank-number { color: #ffd700; font-size: 1.4rem; }
+.rank-2 .rank-number { color: #c0c0c0; }
+.rank-3 .rank-number { color: #cd7f32; }
+
+.user-info { flex-grow: 1; margin-left: 10px; }
+.user-info .name { display: block; font-weight: 600; font-size: 0.95rem; }
+.user-info .stat { font-size: 0.75rem; color: #8a8d91; }
+
+.user-balance {
+    text-align: right;
+    font-weight: bold;
+    color: #4cd964;
+    font-family: monospace;
+}
+
+.my-rank-footer {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background: #007aff;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 5px 20px rgba(0, 122, 255, 0.4);
+}
+
+.back-btn { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; }
+.loading { text-align: center; margin-top: 50px; color: #8a8d91; }

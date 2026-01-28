@@ -1,12 +1,31 @@
-<!doctype html>
-<html>
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1">
-    </head>
-    <body>
-      <div>
-        Hello World!
-      </div>
-    </body>
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top 50 - TON Mining</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="top.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <button onclick="window.location.href='home.html'" class="back-btn">⬅</button>
+            <span>Liderlar Paneli</span>
+            <div class="wallet-badge">TOP 50</div>
+        </div>
+
+        <div class="top-list-container">
+            <div id="top-list">
+                <div class="loading">Yuklanmoqda...</div>
+            </div>
+        </div>
+
+        <div id="my-rank" class="my-rank-footer">
+            <span>Sizning o'rningiz: yuklanmoqda...</span>
+        </div>
+    </div>
+    <script type="module" src="top.js"></script>
+</body>
 </html>
