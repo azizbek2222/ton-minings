@@ -3,7 +3,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background-color: #050b16; /* To'q ko'k/qora fon */
+    background-color: #050b16;
     color: white;
     user-select: none;
     overflow-x: hidden;
@@ -14,12 +14,11 @@ body {
     flex-direction: column;
     min-height: 100vh;
     padding: 20px;
-    padding-bottom: 100px; /* Pastki menyu uchun joy */
+    padding-bottom: 100px;
     box-sizing: border-box;
     background: radial-gradient(circle at top right, #007aff22 0%, #050b16 60%);
 }
 
-/* 2. Header (Foydalanuvchi ismi va Tarmoq) */
 .header {
     display: flex;
     justify-content: space-between;
@@ -38,128 +37,59 @@ body {
     background: rgba(0, 122, 255, 0.1);
     padding: 5px 14px;
     border-radius: 12px;
-    border: 1px solid rgba(0, 122, 255, 0.4);
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: 0.5px;
+    border: 1px solid rgba(0, 122, 255, 0.2);
 }
 
-/* 3. Balans Kartasi */
 .balance-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 25px;
     text-align: center;
-    margin: 40px 0;
-}
-
-.balance-card p {
-    color: #8a8d91;
-    margin: 0;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.balance-card h1 {
-    font-size: 3.5rem;
-    margin: 10px 0;
-    font-weight: 800;
-    color: #fff;
-    text-shadow: 0 0 20px rgba(0, 122, 255, 0.3);
-}
-
-.currency {
-    color: #007aff;
-    font-weight: bold;
-    font-size: 1.2rem;
-}
-
-/* 4. Mining Box (Markaziy qism) */
-.mining-box {
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 24px;
-    padding: 35px 20px;
-    text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.mining-box {
+    margin-top: 30px;
+    text-align: center;
 }
 
 #timer-display {
-    font-size: 3rem;
-    font-weight: 700;
-    font-family: 'Courier New', Courier, monospace;
-    color: #007aff;
-    margin-bottom: 10px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
 }
 
 .progress-container {
     width: 100%;
     height: 10px;
-    background: #1c222d;
-    border-radius: 10px;
-    margin: 25px 0;
+    background: #1c1c1e;
+    border-radius: 5px;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 15px;
 }
 
 #progress-bar {
     width: 0%;
     height: 100%;
-    background: linear-gradient(90deg, #007aff, #00c6ff);
-    transition: width 1s linear;
-    box-shadow: 0 0 10px rgba(0, 122, 255, 0.7);
-}
-
-#mining-status {
-    color: #8a8d91;
-    font-size: 0.95rem;
-    margin-bottom: 5px;
-}
-
-#pending-amount {
-    color: #4cd964; /* Yashil rang yig'ilayotgan summa uchun */
-    margin: 5px 0 0 0;
-    font-size: 1.5rem;
-    font-weight: 600;
-}
-
-/* 5. Mining Tugmasi (Asosiy harakat) */
-.mining-action-footer {
-    margin-top: auto;
-    padding: 20px 0;
+    background: #007aff;
+    transition: width 0.3s;
 }
 
 #action-btn {
     width: 100%;
     padding: 18px;
+    border-radius: 16px;
     border: none;
-    border-radius: 18px;
     background: #007aff;
     color: white;
     font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 6px 20px rgba(0, 122, 255, 0.4);
-    transition: all 0.2s ease;
-    text-transform: uppercase;
+    box-shadow: 0 6px 20px rgba(0, 122, 255, 0.3);
 }
 
-#action-btn:active {
-    transform: scale(0.96);
-}
-
-#action-btn:disabled {
-    background: #2c2c2e;
-    color: #636366;
-    box-shadow: none;
-    cursor: not-allowed;
-}
-
-#action-btn.claim-mode {
-    background: linear-gradient(45deg, #4cd964, #28a745);
-    box-shadow: 0 6px 20px rgba(76, 217, 100, 0.4);
-}
-
-/* 6. Pastki Navigatsiya Menyusi */
+/* 6. Pastki Navigatsiya Menyusi (Yangilangan) */
 .bottom-nav {
     position: fixed;
     bottom: 0;
@@ -173,7 +103,7 @@ body {
     align-items: center;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     z-index: 1000;
-    padding-bottom: env(safe-area-inset-bottom); /* iPhone notch uchun */
+    padding-bottom: env(safe-area-inset-bottom);
 }
 
 .nav-item {
@@ -183,35 +113,15 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    width: 25%;
-    text-decoration: none;
+    flex: 1;
 }
 
 .nav-icon {
-    font-size: 22px;
+    font-size: 1.4rem;
+    margin-bottom: 4px;
 }
 
 .nav-text {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.3px;
-}
-
-.nav-item:active {
-    transform: translateY(-2px);
-    color: #007aff;
-}
-
-.nav-item:hover .nav-icon {
-    transform: scale(1.1);
-}
-
-/* Ekran kichik bo'lsa moslashuvchanlik */
-@media (max-height: 600px) {
-    .balance-card h1 { font-size: 2.5rem; }
-    .mining-box { padding: 20px 15px; }
-    #timer-display { font-size: 2.2rem; }
+    font-size: 0.65rem; /* Tugmalar ko'paygani uchun shrift kichraytirildi */
+    font-weight: 500;
 }
