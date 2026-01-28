@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
 
+// Firebase konfiguratsiyasi
 const firebaseConfig = {
     apiKey: "AIzaSyA7VLHdjPqf_tobSiBczGbN8H7YlFwq9Wg",
     authDomain: "magnetic-alloy-467611-u7.firebaseapp.com",
@@ -15,13 +16,15 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const tg = window.Telegram.WebApp;
 
-const user = tg.initDataUnsafe?.user || { id: "123456" };
+// Foydalanuvchi ma'lumotlari
+const user = tg.initDataUnsafe?.user || { id: "test_user" };
 const userId = user.id.toString();
 
 // 1. Shaxsiy referal linkni yaratish
-// BOT_USERNAME o'rniga o'z botingiz userneymini yozing
-const botUsername = "Ton_miningsbot/mining"; 
-const refLink = `https://t.me/${botUsername}?start=${userId}`;
+// MUHIM: Telegram Mini App linklarida 'startapp' parametri ishlatiladi
+const botUsername = "Ton_miningsbot"; 
+const appName = "mining"; // t.me/bot_username/app_name dagi app_name qismi
+const refLink = `https://t.me/${botUsername}/${appName}?startapp=${userId}`;
 document.getElementById('referral-link').value = refLink;
 
 // 2. Statistika ma'lumotlarini yuklash
@@ -31,6 +34,7 @@ onValue(userRef, (snapshot) => {
     if (data) {
         const count = data.referralsCount || 0;
         document.getElementById('friends-count').innerText = count;
+        // Jami daromad (0.0001 dan hisoblaganda)
         document.getElementById('ref-earnings').innerText = (count * 0.0001).toFixed(4);
     }
 });
@@ -39,13 +43,21 @@ onValue(userRef, (snapshot) => {
 document.getElementById('copy-btn').onclick = () => {
     const linkInput = document.getElementById('referral-link');
     linkInput.select();
-    document.execCommand('copy');
-    tg.showAlert("Havola nusxalandi!");
+    linkInput.setSelectionRange(0, 99999); // Mobil qurilmalar uchun
+    
+    try {
+        navigator.clipboard.writeText(linkInput.value);
+        tg.showAlert("Havola nusxalandi!");
+    } catch (err) {
+        // Fallback (agar clipboard ishlamasa)
+        document.execCommand('copy');
+        tg.showAlert("Havola nusxalandi!");
+    }
 };
 
-// 4. Do'stlarga ulashish (Telegram Share)
+// 4. Do'stlarga ulashish (Telegram orqali)
 document.getElementById('share-btn').onclick = () => {
-    const text = "🚀 Ushbu botda TON mining qiling va real pul ishlang! Mana mening taklif havolam:";
+    const text = "🚀 TON Mining botda real pul ishlang! Mana mening taklif havolam:";
     const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(refLink)}&text=${encodeURIComponent(text)}`;
     tg.openTelegramLink(shareUrl);
 };

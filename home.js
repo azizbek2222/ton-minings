@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-import { getDatabase, ref, onValue, set, update } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+import { getDatabase, ref, onValue, set, update, get } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
 
 // 1. Firebase Konfiguratsiyasi
 const firebaseConfig = {
@@ -33,14 +33,52 @@ const pendingDisplay = document.getElementById('pending-amount');
 const miningStatus = document.getElementById('mining-status');
 const actionBtn = document.getElementById('action-btn');
 
-// 4. Mining Sozlamalari (Tuzatildi: 10 minutda 0.00005 TON)
-const miningDuration = 600; // 10 minut
-const miningReward = 0.00005; // Siz aytgan miqdor
+// 4. Mining Sozlamalari (10 minutda 0.00005 TON)
+const miningDuration = 600; 
+const miningReward = 0.00005; 
 let timerInterval = null;
 let totalBalance = 0;
 
 // Adsgram
 const AdController = window.Adsgram.init({ blockId: "int-21900" }); 
+
+// --- REFERAL TIZIMI LOGIKASI ---
+async function handleReferralBonus(currentUserData) {
+    // Agar foydalanuvchi allaqachon tekshirilgan bo'lsa, to'xtatamiz
+    if (currentUserData && currentUserData.referredByHandled === true) return;
+
+    const startParam = tg.initDataUnsafe?.start_param;
+
+    // Agar start_param mavjud bo'lsa va u foydalanuvchining o'z ID-si bo'lmasa
+    if (startParam && startParam !== userId) {
+        const referrerRef = ref(db, 'users/' + startParam);
+        
+        try {
+            const referrerSnapshot = await get(referrerRef);
+            if (referrerSnapshot.exists()) {
+                const referrerData = referrerSnapshot.val();
+                
+                // Taklif qilgan odamga bonus berish
+                await update(referrerRef, {
+                    referralsCount: (referrerData.referralsCount || 0) + 1,
+                    balance: (referrerData.balance || 0) + 0.0001
+                });
+
+                // Yangi foydalanuvchini belgilash
+                await update(userRef, {
+                    referredByHandled: true,
+                    invitedBy: startParam
+                });
+                console.log("Referal bonus berildi!");
+            }
+        } catch (error) {
+            console.error("Referal xatosi:", error);
+        }
+    } else {
+        // Parametr bo'lmasa ham bazani yangilab qo'yamiz
+        await update(userRef, { referredByHandled: true });
+    }
+}
 
 // 5. Firebase'dan ma'lumotlarni yuklash
 onValue(userRef, (snapshot) => {
@@ -50,16 +88,24 @@ onValue(userRef, (snapshot) => {
         totalBalanceDisplay.innerText = totalBalance.toFixed(6);
         userNameDisplay.innerText = data.name || user.first_name;
 
+        // Referalni tekshirish
+        if (!data.referredByHandled) {
+            handleReferralBonus(data);
+        }
+
         if (data.miningStartedAt) {
             checkMiningStatus(data.miningStartedAt);
         } else {
             resetStartButton();
         }
     } else {
+        // Yangi foydalanuvchi yaratish
         set(userRef, {
             name: user.first_name,
             balance: 0,
-            miningStartedAt: null
+            miningStartedAt: null,
+            referralsCount: 0,
+            referredByHandled: false // Birinchi kirishda false
         });
     }
 });
@@ -71,7 +117,7 @@ function checkMiningStatus(startTime) {
 
     if (remaining > 0) {
         startTimer(remaining);
-        miningStatus.innerText = "Mining jarayonda..."; // Siz aytgan yozuv
+        miningStatus.innerText = "Mining jarayonda...";
         actionBtn.disabled = true;
     } else {
         stopMiningUI();
@@ -149,7 +195,6 @@ function updateUI(remaining) {
     let progress = ((miningDuration - remaining) / miningDuration) * 100;
     progressBar.style.width = progress + "%";
     
-    // Vizual ravishda o'sib borishini ko'rsatish
     let pending = ((miningDuration - remaining) / miningDuration) * miningReward;
     pendingDisplay.innerText = pending.toFixed(6);
 }
