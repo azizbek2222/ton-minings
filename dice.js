@@ -24,7 +24,7 @@ const rollBtn = document.getElementById('roll-btn');
 const cube = document.getElementById('cube');
 
 // ADSGRAM BLOCK ID LAR RO'YXATI
-const blockIds = ["int-21833", "int-21892", "int-21893"]; // O'zingizning boshqa ID laringizni shu yerga qo'shing
+const blockIds = ["int-21901", "int-21903", "int-21904", "int-21905", "int-21906"]; // O'zingizning boshqa ID laringizni shu yerga qo'shing
 
 onValue(userRef, (snapshot) => {
     const data = snapshot.val();

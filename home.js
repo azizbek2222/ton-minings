@@ -27,7 +27,7 @@ document.getElementById('user-name').innerText = user.first_name;
 let AdController = null;
 try {
     if (window.Adsgram) {
-        AdController = window.Adsgram.init({ blockId: "int-21833" });
+        AdController = window.Adsgram.init({ blockId: "int-21900" });
     }
 } catch (e) { console.error("AdsGram init error"); }
 
