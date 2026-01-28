@@ -46,15 +46,12 @@ rollBtn.onclick = async () => {
         const result = await AdController.show();
         
         if (result.done) {
-            // FAQAT REKLAMA TUGASA AYLANADI
             rollDice();
         } else {
-            // REKLAMA YOPILSA AYLANMAYDI
             tg.showAlert("Jarayon oxirigacha kutilishi shart!");
             resetBtn();
         }
     } catch (e) {
-        // XATOLIK BO'LSA ZAR AYLANMAYDI
         console.error("Ad Error:", e);
         tg.showAlert("Hozircha imkoniyat yo'q, qayta urunib ko'ring.");
         resetBtn();
@@ -65,30 +62,35 @@ function rollDice() {
     rollBtn.innerText = "AYLANMOQDA...";
     const side = Math.floor(Math.random() * 6) + 1;
     
+    // 3D Animatsiya uchun tasodifiy aylanishlar qo'shildi
+    const xRotation = (Math.floor(Math.random() * 5) + 5) * 360; 
+    const yRotation = (Math.floor(Math.random() * 5) + 5) * 360; 
+
     const angles = {
-        1: {x: 0, y: 0},
-        2: {x: 0, y: -90},
-        3: {x: 0, y: -180},
-        4: {x: 0, y: 90},
-        5: {x: -90, y: 0},
-        6: {x: 90, y: 0}
+        1: {x: xRotation, y: yRotation},
+        2: {x: xRotation, y: yRotation - 90},
+        3: {x: xRotation, y: yRotation - 180},
+        4: {x: xRotation, y: yRotation + 90},
+        5: {x: xRotation - 90, y: yRotation},
+        6: {x: xRotation + 90, y: yRotation}
     };
 
-    cube.style.transform = `rotateX(${angles[side].x + 720}deg) rotateY(${angles[side].y + 720}deg)`;
+    cube.style.transform = `rotateX(${angles[side].x}deg) rotateY(${angles[side].y}deg)`;
 
     setTimeout(async () => {
-        const winAmount = side * 0.00001;
+        // MATEMATIK TUZATISH: side o'zgaruvchisi mukofotga ko'paytiriladi
+        const winAmount = side * 0.00001; 
         const newBalance = currentBalance + winAmount;
         
         try {
             await update(userRef, { balance: newBalance });
             addHistory(side, winAmount);
-            tg.showAlert(`Tabriklaymiz! +${winAmount.toFixed(5)} TON!`);
+            tg.showAlert(`Tabriklaymiz! ${side} tushdi. +${winAmount.toFixed(5)} TON!`);
         } catch (error) {
             console.log("DB update error");
         }
         resetBtn();
-    }, 1500);
+    }, 2500); // Animatsiya vaqti uzaytirildi (chiroyli ko'rinishi uchun)
 }
 
 function resetBtn() {
