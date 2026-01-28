@@ -90,7 +90,7 @@ function rollDice() {
         try {
             await update(userRef, { balance: newBalance });
             addHistory(side, winAmount);
-            tg.showAlert(`Tabriklaymiz! ${side} tushdi. +${winAmount.toFixed(5)} TON!`);
+            tg.showAlert(`Congratulations! ${side} has landed. +${winAmount.toFixed(5)} TON!`);
         } catch (error) {
             console.log("DB error");
         }
