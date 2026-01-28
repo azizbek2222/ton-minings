@@ -128,7 +128,7 @@ function resetStartButton() {
     actionBtn.disabled = false;
     actionBtn.innerText = "START RIDING";
     actionBtn.classList.remove('claim-mode');
-    miningStatus.innerText = "Mining boshlashga tayyor";
+    miningStatus.innerText = "Ready to start mining";
     timerDisplay.innerText = "10:00";
     progressBar.style.width = "0%";
     pendingDisplay.innerText = "0.00000";
