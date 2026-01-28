@@ -20,7 +20,7 @@ const userId = user.id.toString();
 
 // 1. Shaxsiy referal linkni yaratish
 // BOT_USERNAME o'rniga o'z botingiz userneymini yozing
-const botUsername = "@Ton_miningsbot"; 
+const botUsername = "Ton_miningsbot/mining"; 
 const refLink = `https://t.me/${botUsername}?start=${userId}`;
 document.getElementById('referral-link').value = refLink;
 
