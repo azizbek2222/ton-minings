@@ -57,7 +57,7 @@ document.getElementById('copy-btn').onclick = () => {
 
 // 4. Do'stlarga ulashish (Telegram orqali)
 document.getElementById('share-btn').onclick = () => {
-    const text = "🚀 TON Mining botda real pul ishlang! Mana mening taklif havolam:";
+    const text = "🚀 Earn real money with TON Mining bot! Here is my referral link:";
     const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(refLink)}&text=${encodeURIComponent(text)}`;
     tg.openTelegramLink(shareUrl);
 };

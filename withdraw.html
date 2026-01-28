@@ -12,19 +12,19 @@
     <div class="app-container">
         <div class="header">
             <button onclick="window.location.href='home.html'" class="back-btn">⬅</button>
-            <span>Yechib olish</span>
-            <div class="balance-mini">Balans: <span id="user-balance">0.00</span> TON</div>
+            <span>withdraw</span>
+            <div class="balance-mini">Balance: <span id="user-balance">0.00</span> TON</div>
         </div>
 
         <div class="withdraw-card">
-            <p class="info-text">FaucetPay Gmail hisobingizga yeching</p>
+            <p class="info-text">Withdraw FaucetPay to your Gmail account</p>
             <input type="email" id="faucetpay-email" placeholder="FaucetPay Gmail" class="w-input">
-            <input type="number" id="withdraw-amount" placeholder="Miqdor (Min: 0.001)" class="w-input" step="0.0001">
-            <button id="withdraw-submit-btn" class="w-btn">SO'ROV YUBORISH</button>
+            <input type="number" id="withdraw-amount" placeholder="Quantity (Min: 0.001)" class="w-input" step="0.0001">
+            <button id="withdraw-submit-btn" class="w-btn">SEND A REQUEST</button>
         </div>
 
         <div class="history-section">
-            <h3>So'rovlar tarixi (Oxirgi 10 ta)</h3>
+            <h3>Query history (Last 10)</h3>
             <div id="history-list">
                 </div>
         </div>

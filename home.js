@@ -69,10 +69,10 @@ async function handleReferralBonus(currentUserData) {
                     referredByHandled: true,
                     invitedBy: startParam
                 });
-                console.log("Referal bonus berildi!");
+                console.log("Referral bonus given!");
             }
         } catch (error) {
-            console.error("Referal xatosi:", error);
+            console.error("Referral error:", error);
         }
     } else {
         // Parametr bo'lmasa ham bazani yangilab qo'yamiz
@@ -117,7 +117,7 @@ function checkMiningStatus(startTime) {
 
     if (remaining > 0) {
         startTimer(remaining);
-        miningStatus.innerText = "Mining jarayonda...";
+        miningStatus.innerText = "Mining in progress...";
         actionBtn.disabled = true;
     } else {
         stopMiningUI();
@@ -126,7 +126,7 @@ function checkMiningStatus(startTime) {
 
 function resetStartButton() {
     actionBtn.disabled = false;
-    actionBtn.innerText = "MININGNI BOSHLASH";
+    actionBtn.innerText = "START RIDING";
     actionBtn.classList.remove('claim-mode');
     miningStatus.innerText = "Mining boshlashga tayyor";
     timerDisplay.innerText = "10:00";
@@ -144,18 +144,18 @@ actionBtn.onclick = async () => {
 
 async function showAdAndStartMining() {
     actionBtn.disabled = true;
-    actionBtn.innerText = "REKLAMA YUKLANMOQDA...";
+    actionBtn.innerText = "AT THE BEGINNING OF MAY...";
 
     try {
         const result = await AdController.show();
         if (result && result.done) {
             startMiningInDB();
         } else {
-            tg.showAlert("Mining boshlash uchun reklamani oxirigacha ko'ring!");
+            tg.showAlert("Watch the ad until the end to start mining!");
             resetStartButton();
         }
     } catch (error) {
-        tg.showAlert("Reklama yuklanmadi. Qayta urinib ko'ring.");
+        tg.showAlert("The ad failed to load. Please try again.");
         resetStartButton();
     }
 }
@@ -165,9 +165,9 @@ async function startMiningInDB() {
         await update(userRef, {
             miningStartedAt: Date.now()
         });
-        miningStatus.innerText = "Mining jarayonda...";
+        miningStatus.innerText = "Mining in progress...";
     } catch (e) {
-        tg.showAlert("Xatolik: " + e.message);
+        tg.showAlert("Error: " + e.message);
         resetStartButton();
     }
 }
@@ -205,7 +205,7 @@ function stopMiningUI() {
     actionBtn.disabled = false;
     actionBtn.innerText = "CLAIM TON";
     actionBtn.classList.add('claim-mode');
-    miningStatus.innerText = "Mining yakunlandi!";
+    miningStatus.innerText = "Mining completed!";
     timerDisplay.innerText = "00:00";
     progressBar.style.width = "100%";
     pendingDisplay.innerText = miningReward.toFixed(5);
@@ -220,9 +220,9 @@ async function claimTon() {
             miningStartedAt: null 
         });
         resetStartButton();
-        tg.showAlert(`Muvaffaqiyatli! ${miningReward} TON qo'shildi.`);
+        tg.showAlert(`Success! ${miningReward} TON added.`);
     } catch (e) {
-        tg.showAlert("Xatolik: " + e.message);
+        tg.showAlert("Error: " + e.message);
         actionBtn.disabled = false;
     }
 }

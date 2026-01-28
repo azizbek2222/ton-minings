@@ -54,15 +54,15 @@ document.getElementById('withdraw-submit-btn').onclick = async () => {
     const amount = parseFloat(document.getElementById('withdraw-amount').value);
 
     if (!email.includes('@')) {
-        tg.showAlert("Noto'g'ri Gmail kiritildi!");
+        tg.showAlert("Invalid Gmail entered!");
         return;
     }
     if (amount < 0.001) {
-        tg.showAlert("Minimal yechish 0.001 TON!");
+        tg.showAlert("Minimum withdrawal 0.001 TON!");
         return;
     }
     if (amount > currentBalance) {
-        tg.showAlert("Balansda yetarli mablag' yo'q!");
+        tg.showAlert("There are not enough funds in the balance.!");
         return;
     }
 
@@ -76,7 +76,7 @@ document.getElementById('withdraw-submit-btn').onclick = async () => {
         userName: user.first_name,
         email,
         amount,
-        status: "kutilmoqda",
+        status: "expected",
         timestamp: Date.now()
     };
 
@@ -88,9 +88,9 @@ document.getElementById('withdraw-submit-btn').onclick = async () => {
         // 3. Foydalanuvchi tarixi
         await set(ref(db, `user_history/${userId}/${reqId}`), requestData);
         
-        tg.showAlert("So'rov yuborildi! Kutilmoqda holatida.");
+        tg.showAlert("Request sent! Pending status.");
         document.getElementById('withdraw-amount').value = "";
     } catch (e) {
-        tg.showAlert("Xatolik yuz berdi!");
+        tg.showAlert("An error occurred.!");
     }
 };

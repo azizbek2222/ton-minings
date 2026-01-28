@@ -40,31 +40,31 @@ rollBtn.onclick = async () => {
     const AdController = window.Adsgram ? window.Adsgram.init({ blockId: randomId }) : null;
 
     if (!AdController) {
-        tg.showAlert("Tizim yuklanmoqda, kuting...");
+        tg.showAlert("The system is loading, please wait...");
         return;
     }
 
     try {
         rollBtn.disabled = true;
-        rollBtn.innerText = "KUTING..."; 
+        rollBtn.innerText = "WAIT..."; 
         
         const result = await AdController.show();
         
         if (result.done) {
             rollDice();
         } else {
-            tg.showAlert("Mukofot olish uchun reklamani oxirigacha ko'ring!");
+            tg.showAlert("Watch the ad until the end to get a reward!");
             resetBtn();
         }
     } catch (e) {
         console.error("Ad Error:", e);
-        tg.showAlert("Hozircha reklama mavjud emas, qayta urunib ko'ring.");
+        tg.showAlert("There are currently no ads available, please try again..");
         resetBtn();
     }
 };
 
 function rollDice() {
-    rollBtn.innerText = "AYLANMOQDA...";
+    rollBtn.innerText = "ON THE GO...";
     const side = Math.floor(Math.random() * 6) + 1;
     
     // Haqiqiy 3D effekt uchun ko'p marta aylantirish
@@ -100,7 +100,7 @@ function rollDice() {
 
 function resetBtn() {
     rollBtn.disabled = false;
-    rollBtn.innerText = "ZAR TASHLASH";
+    rollBtn.innerText = "DICE THROWING";
 }
 
 function addHistory(side, amount) {

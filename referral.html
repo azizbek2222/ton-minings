@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Referal Tizimi</title>
+    <title>Referral System</title>
     <link rel="stylesheet" href="home.css">
     <link rel="stylesheet" href="referral.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -12,33 +12,33 @@
     <div class="app-container">
         <div class="header">
             <button onclick="window.location.href='home.html'" class="back-btn">⬅</button>
-            <span>Do'stlarni taklif qilish</span>
+            <span>Invite friends</span>
         </div>
 
         <div class="referral-card">
             <div class="gift-icon">🎁</div>
-            <h2>Bonus oling!</h2>
-            <p>Har bir faol do'stingiz uchun <b>0.0001 TON</b> bonus beriladi.</p>
+            <h2>Get a bonus!</h2>
+            <p>For each active friend you refer, you will receive a bonus of <b>0.0001 TON</b>.</p>
             
             <div class="link-box">
-                <input type="text" id="referral-link" readonly value="Yuklanmoqda...">
-                <button id="copy-btn">Nusxa</button>
+                <input type="text" id="referral-link" readonly value="Loading...">
+                <button id="copy-btn">Copy</button>
             </div>
         </div>
 
         <div class="stats-section">
             <div class="stat-item">
                 <span id="friends-count">0</span>
-                <p>Takliflar</p>
+                <p>Offers</p>
             </div>
             <div class="stat-item">
                 <span id="ref-earnings">0.0000</span>
-                <p>Jami daromad</p>
+                <p>Total income</p>
             </div>
         </div>
 
         <div class="invite-action">
-            <button id="share-btn" class="main-btn">DO'STLARGA YUBORISH</button>
+            <button id="share-btn" class="main-btn">SEND TO FRIENDS</button>
         </div>
     </div>
     <script type="module" src="referral.js"></script>

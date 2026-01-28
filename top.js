@@ -57,5 +57,5 @@ function renderTopList(users) {
         topListDiv.appendChild(row);
     });
 
-    myRankDiv.innerHTML = `Sizning o'rningiz: #${myRank}`;
+    myRankDiv.innerHTML = `Your place: #${myRank}`;
 }

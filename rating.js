@@ -32,7 +32,7 @@ onValue(requestsRef, (snapshot) => {
 
     snapshot.forEach((child) => {
         const req = child.val();
-        if (req.status === "tasdiqlandi") {
+        if (req.status === "approved") {
             totalPaid += parseFloat(req.amount);
             recentPayouts.push(req);
         }
@@ -54,6 +54,6 @@ onValue(requestsRef, (snapshot) => {
     });
 
     if (recentPayouts.length === 0) {
-        payoutsList.innerHTML = "<div style='text-align:center;color:#555;'>Hozircha to'lovlar yo'q</div>";
+        payoutsList.innerHTML = "<div style='text-align:center;color:#555;'>No payments yet.</div>";
     }
 });
