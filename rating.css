@@ -1,5 +1,69 @@
-body
-{
-    color: #000000;
-    padding: 0px;
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 20px;
 }
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.stat-icon { font-size: 1.8rem; display: block; margin-bottom: 10px; }
+.stat-card h2 { font-size: 1.4rem; color: #007aff; margin: 5px 0; }
+.stat-card p { font-size: 0.75rem; color: #8a8d91; text-transform: uppercase; }
+
+.live-payouts {
+    margin-top: 30px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.payout-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.live-badge {
+    background: #ff3b30;
+    color: white;
+    font-size: 0.6rem;
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-weight: bold;
+    animation: blink 1.5s infinite;
+}
+
+@keyframes blink { 0% {opacity: 1;} 50% {opacity: 0.4;} 100% {opacity: 1;} }
+
+.payout-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.payout-user { font-size: 0.9rem; font-weight: 500; }
+.payout-amount { color: #4cd964; font-weight: bold; font-family: monospace; }
+
+.trust-info {
+    margin-top: 20px;
+    text-align: center;
+    color: #8a8d91;
+    font-size: 0.8rem;
+    background: rgba(76, 217, 100, 0.05);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.back-btn { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; }
+.status-dot { font-size: 0.7rem; color: #4cd964; border: 1px solid #4cd964; padding: 2px 8px; border-radius: 20px; }
