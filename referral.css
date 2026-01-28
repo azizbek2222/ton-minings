@@ -1,0 +1,65 @@
+.referral-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 25px;
+    padding: 30px 20px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 20px;
+}
+
+.gift-icon { font-size: 3rem; margin-bottom: 15px; }
+.referral-card h2 { margin: 0 0 10px 0; font-size: 1.5rem; }
+.referral-card p { color: #8a8d91; font-size: 0.9rem; margin-bottom: 25px; }
+
+.link-box {
+    display: flex;
+    background: #1c222d;
+    border-radius: 12px;
+    padding: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#referral-link {
+    background: none;
+    border: none;
+    color: #007aff;
+    padding: 10px;
+    width: 100%;
+    font-size: 0.8rem;
+    outline: none;
+}
+
+#copy-btn {
+    background: #007aff;
+    border: none;
+    color: white;
+    padding: 0 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.stats-section {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+
+.stat-item { text-align: center; }
+.stat-item span { display: block; font-size: 1.5rem; font-weight: bold; color: #fff; }
+.stat-item p { color: #8a8d91; font-size: 0.8rem; margin: 5px 0 0 0; }
+
+.invite-action { margin-top: auto; padding: 20px 0; }
+.main-btn {
+    width: 100%;
+    padding: 18px;
+    background: #007aff;
+    border: none;
+    border-radius: 18px;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    box-shadow: 0 5px 15px rgba(0, 122, 255, 0.3);
+}
+
+.back-btn { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; }
