@@ -40,7 +40,7 @@ let timerInterval = null;
 let totalBalance = 0;
 
 // Adsgram
-const AdController = window.Adsgram.init({ blockId: "3776" }); 
+const AdController = window.Adsgram.init({ blockId: "int-21900" }); 
 
 // 5. Firebase'dan ma'lumotlarni yuklash
 onValue(userRef, (snapshot) => {
