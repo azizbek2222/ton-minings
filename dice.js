@@ -23,7 +23,8 @@ let currentBalance = 0;
 const rollBtn = document.getElementById('roll-btn');
 const cube = document.getElementById('cube');
 
-const AdController = window.Adsgram ? window.Adsgram.init({ blockId: "int-21833" }) : null;
+// ADSGRAM BLOCK ID LAR RO'YXATI
+const blockIds = ["int-21833", "int-21892", "int-21893"]; // O'zingizning boshqa ID laringizni shu yerga qo'shing
 
 onValue(userRef, (snapshot) => {
     const data = snapshot.val();
@@ -34,6 +35,10 @@ onValue(userRef, (snapshot) => {
 });
 
 rollBtn.onclick = async () => {
+    // Har safar tasodifiy ID tanlash
+    const randomId = blockIds[Math.floor(Math.random() * blockIds.length)];
+    const AdController = window.Adsgram ? window.Adsgram.init({ blockId: randomId }) : null;
+
     if (!AdController) {
         tg.showAlert("Tizim yuklanmoqda, kuting...");
         return;
@@ -48,12 +53,12 @@ rollBtn.onclick = async () => {
         if (result.done) {
             rollDice();
         } else {
-            tg.showAlert("Jarayon oxirigacha kutilishi shart!");
+            tg.showAlert("Mukofot olish uchun reklamani oxirigacha ko'ring!");
             resetBtn();
         }
     } catch (e) {
         console.error("Ad Error:", e);
-        tg.showAlert("Hozircha imkoniyat yo'q, qayta urunib ko'ring.");
+        tg.showAlert("Hozircha reklama mavjud emas, qayta urunib ko'ring.");
         resetBtn();
     }
 };
@@ -62,7 +67,7 @@ function rollDice() {
     rollBtn.innerText = "AYLANMOQDA...";
     const side = Math.floor(Math.random() * 6) + 1;
     
-    // 3D Animatsiya uchun tasodifiy aylanishlar qo'shildi
+    // Haqiqiy 3D effekt uchun ko'p marta aylantirish
     const xRotation = (Math.floor(Math.random() * 5) + 5) * 360; 
     const yRotation = (Math.floor(Math.random() * 5) + 5) * 360; 
 
@@ -78,7 +83,7 @@ function rollDice() {
     cube.style.transform = `rotateX(${angles[side].x}deg) rotateY(${angles[side].y}deg)`;
 
     setTimeout(async () => {
-        // MATEMATIK TUZATISH: side o'zgaruvchisi mukofotga ko'paytiriladi
+        // MATEMATIK TUZATISH: Zar ochkosiga mos pul qo'shiladi
         const winAmount = side * 0.00001; 
         const newBalance = currentBalance + winAmount;
         
@@ -87,10 +92,10 @@ function rollDice() {
             addHistory(side, winAmount);
             tg.showAlert(`Tabriklaymiz! ${side} tushdi. +${winAmount.toFixed(5)} TON!`);
         } catch (error) {
-            console.log("DB update error");
+            console.log("DB error");
         }
         resetBtn();
-    }, 2500); // Animatsiya vaqti uzaytirildi (chiroyli ko'rinishi uchun)
+    }, 2500); 
 }
 
 function resetBtn() {
